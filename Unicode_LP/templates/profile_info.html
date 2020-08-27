@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-center"> profile info</h1>
+<br>
+<div class="container-fluid text-center">
+ <h3 class="mb-2">{{user.user.username}}</h3>
+ <img src="{{user.imageURL}}" width="200"  height="200">
+<br>
+<h3 class="m-3">Name : {{user.Fname}} {{user.Lname}}</h3>
+<h3 class="m-3">Email : {{user.user.email}} </h3>
+<h3 class="m-3">Date of Birth : {{user.DOB}}</h3>
+<h3 class="m-3">Gender : {{user.gender}}</h3>
+<br>
+       <h4>
+           <a class="text-white btn btn-warning ml-1" href="#" >Edit</a>              
+            <a class="btn btn-danger ml-2" href="{% url 'delete_User' user.user.id %}">Delete</a>
+       </h4>
+
+    
+</div>
+</div>
+{% endblock %}
