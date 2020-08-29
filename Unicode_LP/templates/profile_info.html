@@ -12,8 +12,13 @@
 <h3 class="m-3">Gender : {{user.gender}}</h3>
 <br>
        <h4>
-           <a class="text-white btn btn-warning ml-1" href="#" >Edit</a>              
-            <a class="btn btn-danger ml-2" href="{% url 'delete_User' user.user.id %}">Delete</a>
+              {% if is_user %}
+              <a class="text-white btn btn-warning ml-1" href="{% url 'create_Myprofile'%}" >Edit</a>              
+              <a class="btn btn-danger ml-2" href="{% url 'delete_MyUser' %}">Delete</a>
+              {% else %}
+              <a class="text-white btn btn-warning ml-1" href="{% url 'create_profile' user.user.id %}" >Edit</a>              
+              <a class="btn btn-danger ml-2" href="{% url 'delete_User' user.user.id %}">Delete</a>
+              {% endif %}
        </h4>
 
     

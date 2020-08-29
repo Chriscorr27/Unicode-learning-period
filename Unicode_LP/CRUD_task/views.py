@@ -2,23 +2,95 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import *
 from account.models import myUser
+from .forms import *
+from django.contrib import messages
+from django.contrib.auth.models import auth
+
 # Create your views here.
 
-def home(request):
+def daseborder(request):
     users= App_user.objects.all()
-    for user in users:
-        print(user.id)
-    
     content ={'users':users}
+    return render(request,'daseborder.html',content)
+
+def home(request):
+    content={}
     return render(request,'home.html',content)
 
 def profile_info(request,id):
+    is_user=false
     user=myUser.objects.get(id=id)
     Profile = App_user.objects.get(user=user)
-    content={'user':Profile}
+    content={'user':Profile,'is_user':is_user}
     return render(request,'profile_info.html',content)
 
 def delete_User(request,id):
     user=myUser.objects.get(id=id)
     user.delete()
-    return redirect('home')
+    return redirect('daseborder')
+
+def create_profile(request,id):
+    #user = request.user
+    
+    user = myUser.objects.get(id=id)
+    app = App_user.objects.get(user=user)
+    form = CreateProfile(instance=app)
+    message=""
+    message_style="invisible"
+    #print(id)
+    #print(form)
+    if request.method == "POST":
+        form = CreateProfile(request.POST,request.FILES,instance=app)
+        
+        if form.is_valid():
+            #print(form.cleaned_data['user'])
+            
+            #print(users.Fname)
+            if form.cleaned_data['gender'] is not None:
+                form.save()
+                return redirect('daseborder')
+            else:
+                message = "gender should be be specified"
+                message_style = "visible"
+    content={'form':form,'message':message,'msg_style':message_style}
+    return render(request,'create_profile.html',content)
+
+   
+def create_Myprofile(request):
+    user = request.user
+    app = App_user.objects.get(user=user)
+    form = CreateProfile(instance=app)
+    message=""
+    message_style="invisible"
+    #print(id)
+    #print(form)
+    if request.method == "POST":
+        form = CreateProfile(request.POST,request.FILES,instance=app)
+        
+        if form.is_valid():
+            #print(form.cleaned_data['user'])
+            
+            #print(users.Fname)
+            if form.cleaned_data['gender'] is not None:
+                form.save()
+                return redirect('home')
+            else:
+                message = "gender should be be specified"
+                message_style = "visible"
+    content={'form':form,'message':message,'msg_style':message_style}
+    return render(request,'create_profile.html',content)
+
+def Myprofile(request):
+    is_user=True
+    user=request.user
+    Profile = App_user.objects.get(user=user)
+    content={'user':Profile,'is_user':is_user}
+    return render(request,'profile_info.html',content)
+
+
+def delete_MyUser(request):
+    user=request.user
+    
+    auth.logout(request)
+    user.delete()
+    return redirect('register_user')
