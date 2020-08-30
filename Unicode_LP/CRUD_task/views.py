@@ -5,18 +5,20 @@ from account.models import myUser
 from .forms import *
 from django.contrib import messages
 from django.contrib.auth.models import auth
-
+from account.decorator import only_superuser,unauthenticated_user,authenticated_user
 # Create your views here.
-
+@only_superuser
 def daseborder(request):
     users= App_user.objects.all()
     content ={'users':users}
     return render(request,'daseborder.html',content)
 
+@authenticated_user
 def home(request):
     content={}
     return render(request,'home.html',content)
-
+    
+@only_superuser
 def profile_info(request,id):
     is_user=false
     user=myUser.objects.get(id=id)
@@ -24,11 +26,13 @@ def profile_info(request,id):
     content={'user':Profile,'is_user':is_user}
     return render(request,'profile_info.html',content)
 
+@only_superuser
 def delete_User(request,id):
     user=myUser.objects.get(id=id)
     user.delete()
     return redirect('daseborder')
 
+@only_superuser
 def create_profile(request,id):
     #user = request.user
     
@@ -55,7 +59,7 @@ def create_profile(request,id):
     content={'form':form,'message':message,'msg_style':message_style}
     return render(request,'create_profile.html',content)
 
-   
+@authenticated_user   
 def create_Myprofile(request):
     user = request.user
     app = App_user.objects.get(user=user)
@@ -79,7 +83,7 @@ def create_Myprofile(request):
                 message_style = "visible"
     content={'form':form,'message':message,'msg_style':message_style}
     return render(request,'create_profile.html',content)
-
+@authenticated_user
 def Myprofile(request):
     is_user=True
     user=request.user
@@ -87,10 +91,10 @@ def Myprofile(request):
     content={'user':Profile,'is_user':is_user}
     return render(request,'profile_info.html',content)
 
-
+@authenticated_user
 def delete_MyUser(request):
     user=request.user
     
     auth.logout(request)
     user.delete()
-    return redirect('register_user')
+    return redirect('login_user')
