@@ -9,7 +9,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = myUser
         fields = ['username','email','password','password2']
         extra_kwargs ={
-            'password':{'write_only':True}
+            'password':{'write_only':True},
+            
         }
     def save(self):
         account=myUser(
