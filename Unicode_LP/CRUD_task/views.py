@@ -20,7 +20,7 @@ def home(request):
     
 @only_superuser
 def profile_info(request,id):
-    is_user=false
+    is_user=False
     user=myUser.objects.get(id=id)
     Profile = App_user.objects.get(user=user)
     content={'user':Profile,'is_user':is_user}

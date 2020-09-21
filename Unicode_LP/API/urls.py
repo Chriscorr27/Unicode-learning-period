@@ -4,10 +4,12 @@ from . import views
 from .views import *
 
 urlpatterns = [
-   path('',userApi.as_view(),name='apihome'),
+   path('',views.APIList,name='apiList'),
+   path('userDetail/',userApi.as_view(),name='apihome'),
    path('userDetail/<str:id>/',userDetailApi.as_view(),name='userDetail-api'),
-   
-   
+   path('register/',registerApi.as_view(),name='register-user'),
+   path('getToken/',getToken.as_view(),name='login-user'),
+  # path('logout/',logoutApi.as_view(),name='logout-user'),
   # path('',views.apiOverview,name='apihome'),
   # path('createuser/',views.createuser,name='createuser-api'),
   # path('userList/',views.userList,name='userList-api'),
