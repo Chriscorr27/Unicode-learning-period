@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from . import views
 from .views import *
 
@@ -9,6 +9,8 @@ urlpatterns = [
    path('userDetail/<str:id>/',userDetailApi.as_view(),name='userDetail-api'),
    path('register/',registerApi.as_view(),name='register-user'),
    path('getToken/',getToken.as_view(),name='login-user'),
+   path('auth/', include('djoser.urls')),
+   path('auth/', include('djoser.urls.authtoken')),
   # path('logout/',logoutApi.as_view(),name='logout-user'),
   # path('',views.apiOverview,name='apihome'),
   # path('createuser/',views.createuser,name='createuser-api'),

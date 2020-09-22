@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'djoser',
     'rest_framework.authtoken',
 ]
 
@@ -60,6 +61,26 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'USER_CREATE_PASSWORD_RETYPE':True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION':True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION':True,
+    'SET_USERNAME_RETYPE':True,
+    'SET_PASSWORD_RETYPE':True,
+    'SEND_CONFIRMATION_EMAIL':True,
+    'PASSWORD_RESET_CONFIRM_RETYPE':True,
+    'SERIALIZERS': {
+        'user': 'API.serializers.UserSerializer',
+        'user_create': 'API.serializers.UserSerializer',
+        'user_delete': 'djoser.serializers.UserDeleteSerializer',
+    },
+}
+
 
 TEMPLATES = [
     {
@@ -94,6 +115,14 @@ DATABASES = {
         'HOST':'localhost'
     }
 }
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'chriscorreia2001@gmail.com'
+EMAIL_HOST_PASSWORD = 'gxyvwrbofllqazzj'
+EMAIL_USE_TLS = True
 
 
 # Password validation
