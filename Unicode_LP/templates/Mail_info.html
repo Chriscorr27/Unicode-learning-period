@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid text-center text-dark" style="height: 120px; background-color:burlywood;">
+    <div class="row">
+        <div class="col-9 mt-1 pt-4">
+            <h1>{{mail.title}}</h1>
+        </div>
+        <div class="col-3 pt-5 text-center">
+            <span style="font-size: 20px; font-style: italic;">{{mail.date_Of_Msg}}</span>
+        </div>
+    </div>
+    
+</div>
+<br>
+<div class="container-fluid  text-dark" >
+    <div class="row">
+        
+        <div class="col-9 ml-5 p-4" style="background-color:lightgoldenrodyellow;">
+           <pre>{{mail.chat}}</pre> 
+            <br>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

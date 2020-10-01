@@ -26,12 +26,17 @@ class App_user(models.Model):
 
         
 
-class Chat_model(models.Model):
+class Mail_model(models.Model):
+    title=models.CharField(max_length=50)
     sender = models.ForeignKey(myUser,null=True,related_name='sender',on_delete=models.SET_NULL)
     reciver = models.ForeignKey(myUser,null=True,related_name='reciver',on_delete=models.SET_NULL)
     chat = models.TextField()
     date_Of_Msg = models.DateTimeField(auto_now_add=True)
-    seen = models.BooleanField(default=False)
+    seenby_sender = models.BooleanField(default=False)
+    seenby_recv = models.BooleanField(default=False)
+    def __str__(self):
+        return "sender "+str(self.sender)+" rec. "+str(self.reciver)+" ( "+str(self.id)+" )"
+    
     
 
 class contactList(models.Model):

@@ -1,9 +1,12 @@
 {% block content %}
 {% load static %}
+
 <nav class="navbar sticky-top navbar-dark bg-dark navbar-expand-lg ">
+ 
+  
     <img src="{% static 'images/logo.jpg' %}" width="30" height="30" alt="">
     <a class="navbar-brand ml-1" href="#"> Email App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   
@@ -37,5 +40,10 @@
       
     </div>
   </nav>
+
+
+  
+  
+
   
   {% endblock %}

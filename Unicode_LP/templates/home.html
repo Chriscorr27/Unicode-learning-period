@@ -1,4 +1,110 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<br>
+<br>
+<div class="text-center">
+  {% if indox %}
+    <span class="border m-2 p-3 pl-5 pr-4 text-center border-dark bg-secondary text-white" style="font-size: 40px; width: 200px; height: 100px; border-radius: 50px;">
+      <a href="{% url 'home' %}" class="text-white" style="text-decoration: none;">Inbox</a>
+    </span>
+    <span class="border m-2 p-3 pl-5 pr-5 text-center border-dark " style="font-size: 40px; width: 200px; height: 100px; border-radius: 50px;">
+      <a href="{% url 'send' %}" class="text-dark" style="text-decoration: none;">Sent</a>
+    </span>
+    <br>
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-3  " >
+            <div class=" text-center border border-secondary m-5 mb-3 p-4 bg-danger text-white" style="width: 150px; height: 80px; border-radius: 40px;">
+            <h4 class="">MAILS</h4>
+            </div>
+        </div>
+        <div class="col-4"></div>
+    </div>
+    
+    <div class="container-fluid mt-2 " style="font-size: 25px; ">
+      {% for mail in mails %}
+        <a href="{% url 'mail_info' mail.id %}"  style="text-decoration: none; color:black;">
+          {% if mail.seenby_recv %}
+            <div class="row  pt-4 pb-4 border border-grey font-italic" >
+                <div class="col-3">
+                  from | {{mail.sender}}
+                </div>
+                <div class="col-7">
+                  {{mail.title}} - {{mail.chat}}
+                </div>
+                <div class="col-2">
+                  {{mail.time}}
+                </div>
+            </div>
+          {% else %}
+            <div class="row  pt-4 pb-4 border border-dark font-weight-bold" >
+              <div class="col-3">
+                from | {{mail.sender}}
+              </div>
+              <div class="col-7">
+                {{mail.title}} - {{mail.chat}}
+              </div>
+              <div class="col-2">
+                {{mail.time}}
+              </div>
+            </div>
+          {% endif %}
+        </a>
+      {% endfor %}      
+    </div>
+  {% else %}
+  <span class="border m-2 p-3 pl-5 pr-4 text-center border-dark " style="font-size: 40px; width: 200px; height: 100px; border-radius: 50px;">
+    <a href="{% url 'home' %}" class="text-dark" style="text-decoration: none;">Indox</a>
+  </span>
+  <span class="border m-2 p-3 pl-5 pr-5 text-center border-dark bg-secondary text-white" style="font-size: 40px; width: 200px; height: 100px; border-radius: 50px;">
+    <a href="{% url 'send' %}" class="text-white" style="text-decoration: none;">Sent</a>
+  </span>
+  <br>
+    <div class="row">
+        <div class="col-5"></div>
+        <div class="col-3  " >
+            <div class=" text-center border border-secondary m-5 mb-3 p-4 bg-danger text-white" style="width: 150px; height: 80px; border-radius: 40px;">
+            <h4 class="">MAILS</h4>
+            </div>
+        </div>
+        <div class="col-4"></div>
+    </div>
+    
+    <div class="container-fluid mt-2 " style="font-size: 25px; ">
+      {% for mail in mails %}
+        <a href="{% url 'mail_info' mail.id %}"  style="text-decoration: none; color:black;">
+          {% if mail.seenby_sender %}
+            <div class="row  pt-4 pb-4 border border-grey font-italic " >
+                <div class="col-3">
+                  to | {{mail.reciver}}
+                </div>
+                <div class="col-7">
+                  {{mail.title}} - {{mail.chat}}
+                </div>
+                <div class="col-2">
+                  {{mail.time}}
+                </div>
+            </div>
+          {% else %}
+            <div class="row  pt-4 pb-4 border border-dark font-weight-bold" >
+              <div class="col-3">
+                to | {{mail.reciver}}
+              </div>
+              <div class="col-7">
+                {{mail.title}} - {{mail.chat}}
+              </div>
+              <div class="col-2">
+                {{mail.time}}
+              </div>
+            </div>
+          {% endif %}
+        </a>
+      {% endfor %}  
+        
+        
+    </div>
+  {% endif %}
+</div>
+
 {% endblock %}
