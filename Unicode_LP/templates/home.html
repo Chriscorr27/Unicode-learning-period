@@ -1,6 +1,53 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<button type="button" class="material-icons floating-btn bg-dark  btn" data-toggle="modal" data-target="#mailModel">
+add
+
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="mailModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Mail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'create_mail' %}" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">To:</label>
+            <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" id="Title" placeholder="Title" required name="Title">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            
+            {{form.chat}}
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">File:</label>
+            {{form.file}}
+          </div>
+          
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-dark">Send <i class="fa fa-send-o"></i></button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
 <br>
 <br>
 <div class="text-center">
@@ -31,7 +78,7 @@
                   from | {{mail.sender}}
                 </div>
                 <div class="col-7">
-                  {{mail.title}} - {{mail.chat}}
+                  {{mail.title}} 
                 </div>
                 <div class="col-2">
                   {{mail.time}}
@@ -43,7 +90,7 @@
                 from | {{mail.sender}}
               </div>
               <div class="col-7">
-                {{mail.title}} - {{mail.chat}}
+                {{mail.title}} 
               </div>
               <div class="col-2">
                 {{mail.time}}
@@ -77,10 +124,20 @@
           {% if mail.seenby_sender %}
             <div class="row  pt-4 pb-4 border border-grey font-italic " >
                 <div class="col-3">
-                  to | {{mail.reciver}}
+                  to | 
+                  {% if mail.reciver is not None %}
+                    {{mail.reciver}}
+                  {% else %}
+                    
+                  {% endif %}
                 </div>
                 <div class="col-7">
-                  {{mail.title}} - {{mail.chat}}
+                  {{mail.title}} 
+                  {% if mail.reciver is not None %}
+                  
+                  {% else %}
+                  - error while sending mail
+                  {% endif %}
                 </div>
                 <div class="col-2">
                   {{mail.time}}
@@ -92,7 +149,7 @@
                 to | {{mail.reciver}}
               </div>
               <div class="col-7">
-                {{mail.title}} - {{mail.chat}}
+                {{mail.title}} 
               </div>
               <div class="col-2">
                 {{mail.time}}
@@ -107,4 +164,13 @@
   {% endif %}
 </div>
 
+<script>
+  var chatBox = document.getElementById('id_chat')
+  chatBox.placeholder="Message";
+  chatBox.className="form-control";
+  chatBox.id="message";
+  chatBox.style="height:100px;";
+  chatBox.req
+
+</script>
 {% endblock %}

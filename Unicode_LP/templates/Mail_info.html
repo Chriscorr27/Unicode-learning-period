@@ -2,6 +2,42 @@
 {% load static %}
 {% block content %}
 
+
+    
+    <!-- Modal -->
+    <div class="modal fade" id="mailModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Chat</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              
+              <div class="form-group">
+                <label for="message-text" class="col-form-label">Message:</label>
+                {{form.chat}}
+              </div>
+              <div class="form-group">
+                <label for="message-text" class="col-form-label">File:</label>
+                {{form.file}}
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-dark">Send <i class="fa fa-send-o"></i></button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    
+
+
+
 <div class="container-fluid text-center text-dark" style="height: 120px; background-color:burlywood;">
     <div class="row">
         <div class="col-9 mt-1 pt-4">
@@ -15,14 +51,76 @@
 </div>
 <br>
 <div class="container-fluid  text-dark" >
-    <div class="row">
-        
-        <div class="col-9 ml-5 p-4" style="background-color:lightgoldenrodyellow;">
-           <pre>{{mail.chat}}</pre> 
-            <br>
-            
-        </div>
+    
+      {% if mail.reciver is not None %}
+          {% for chat_info in chat_infos %}   
+            {% if chat_info.senderSide %}
+            <div class="row">
+              <div class="col-9 ml-3 p-4 mt-2" style="background-color:lightgoldenrodyellow;">    
+                <pre style="font-size:30px;" class="mt-3 ml-3"> {{chat_info.chat}}</pre> 
+                  <br>
+                  {% if chat_info.isFile %}
+                  <br>
+                  <h4 class="text-info ml-3">Some file is attach to this msg</h4>
+                  <div class="ml-3"><a href="{{chat_info.fileUrl}}" class="btn btn-info ml-auto ml-3" style="margin-left: 100px;">Open</a></div>
+                  {% endif %}
+              </div>
+              <div class="col-3 "></div>
+            </div>
+            {% else %}
+            <div class="row">
+              <div class="col-3"></div>
+              <div class="col-9  p-4 mt-2" style="background-color:lightgoldenrodyellow; ">    
+                <pre style="font-size:30px;" class="mt-3 ml-3">{{chat_info.chat}}</pre> 
+                  <br>
+                  {% if chat_info.isFile %}
+                    <br>
+                    <h4 class="text-info ml-3">Some file is attach to this msg</h4>
+                    <div class="ml-3"><a href="{{chat_info.fileUrl}}" class="btn btn-info ml-auto ml-3" style="margin-left: 100px;">Open</a></div>
+                  {% endif %}
+              </div>
+          </div>
+            {% endif %}
+          {% endfor %}
+          <br>
+      {% else %}
+      <div class="row">
+      <div class="col-9 ml-5 p-4 mt-2" style="background-color:lightgoldenrodyellow;">    
+            <div class="row">
+                <div class="col-2">
+                    <img src="https://mail.google.com/mail/u/0?ui=2&ik=cc9d4a260a&attid=0.0.1&permmsgid=msg-f:1679505859721507358&th=174ecdae56e3321e&view=fimg&sz=s0-l75-ft&attbid=ANGjdJ_gQYTM75vgehSS8Dm8lPiX3hgkY_dwOEXm-4nSE2UPUcE4EYDX4EIOdPBbDoAFAXrv_PIK3D2jvP4NtfY_hnbLUoncI5338vr2qcGwUzktzQXgDb2BmskvGkM&disp=emb" width="60px" height="60px" class="mt-5 ml-5">
+                </div>
+                <div class="col-10" style="font-size: 25px;">
+                    <pre>
+               <h3 class="text-cnter">   Username not found</h3>
+    Your message wasn't delivered to {{mail.chat}}
+    because the Username couldn't be found, or is 
+    unable to receive mail.
+                    </pre>
+                    <div class="text-center ml-auto">
+                        <a href="{% url 'delete_mail' mail.id %}" class="btn btn-danger ml-auto" style="margin-left: 100px;">delete</a>
+                    </div>
+                    
+                </div>
+            </div>   
+      </div>
     </div>
+        {% endif %}
+    
 </div>
+
+<button type="button" class="material-icons floating-btn bg-dark  btn" data-toggle="modal" data-target="#mailModel">
+  <i class="fa fa-reply" aria-hidden="true"></i>
+  
+</button>
+<script>
+  var chatBox = document.getElementById('id_chat')
+  chatBox.placeholder="Message";
+  chatBox.className="form-control";
+  chatBox.id="message";
+  chatBox.style="height:100px;";
+  chatBox.req
+
+</script>
 
 {% endblock %}

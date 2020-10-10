@@ -4,3 +4,4 @@ from .models import *
 admin.site.register(App_user)
 admin.site.register(Mail_model)
 admin.site.register(contactList)
+admin.site.register(Chat_model)
