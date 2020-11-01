@@ -4,7 +4,7 @@
 
 
     
-    <!-- Modal -->
+{% if mail.reciver is not None %}
     <div class="modal fade" id="mailModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    
+{% endif %}    
 
 
 
@@ -108,11 +108,12 @@
         {% endif %}
     
 </div>
-
+{% if mail.reciver is not None %}
 <button type="button" class="material-icons floating-btn bg-dark  btn" data-toggle="modal" data-target="#mailModel">
   <i class="fa fa-reply" aria-hidden="true"></i>
   
 </button>
+{% endif %}
 <script>
   var chatBox = document.getElementById('id_chat')
   chatBox.placeholder="Message";

@@ -132,7 +132,7 @@ def create_mail(request):
             chats.sender=sender
             chats.mail=mail
             chats.chat=msg
-            chat.save()
+            chats.save()
         return redirect('home')
 
 
