@@ -11,10 +11,10 @@ from django.utils import timezone
 #from dateutil.relativedelta import relativedelta
 # Create your views here.
 @only_superuser
-def daseborder(request):
+def dashborder(request):
     users= App_user.objects.all()
     content ={'users':users}
-    return render(request,'daseborder.html',content)
+    return render(request,'dashborder.html',content)
 
 @authenticated_user
 def send(request):
