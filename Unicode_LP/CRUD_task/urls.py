@@ -12,7 +12,7 @@ urlpatterns = [
    path('create_Myprofile/',views.create_Myprofile,name='create_Myprofile'),
    path('Myprofile/',views.Myprofile,name='Myprofile'),
    path('delete_MyUser/',views.delete_MyUser,name='delete_MyUser'),
-   path('daseborder/',views.daseborder,name='daseborder'),
+   path('dashborder/',views.dashborder,name='dashborder'),
    path('create_mail/',views.create_mail,name='create_mail'),
    path('delete_mail/<int:id>',views.delete_mail,name='delete_mail'),
 
